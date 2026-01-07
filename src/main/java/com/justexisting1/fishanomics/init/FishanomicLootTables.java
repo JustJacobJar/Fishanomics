@@ -15,6 +15,8 @@ public class FishanomicLootTables {
 
     public static final ResourceKey<LootTable> FISH = register("fishing/fish");
     public static final ResourceKey<LootTable> WOODEN_ROD = register("fishing/tiers/wooden_rod");
+    public static final ResourceKey<LootTable> STONE_ROD = register("fishing/tiers/stone_rod");
+    public static final ResourceKey<LootTable> IRON_ROD = register("fishing/tiers/iron_rod");
 
 
     private static ResourceKey<LootTable> register(String path){

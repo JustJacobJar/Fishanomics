@@ -1,6 +1,6 @@
 package com.justexisting1.fishanomics.entity;
 
-import com.justexisting1.fishanomics.init.FishanomicLootTables;
+import com.justexisting1.fishanomics.item.FishanomicFishingRodItem;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -20,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -32,32 +30,58 @@ import java.util.Collections;
 import java.util.List;
 
 public class FishanomicFishingBobberEntity extends FishingHook {
-    private int luck;
-    private ItemStack fishingRod;
+    /**
+     * Fishing rod luck level
+     */
+    private final int luck;
 
-    public FishanomicFishingBobberEntity(EntityType<? extends FishanomicFishingBobberEntity> entityType, Level level) {
-        super(entityType, level);
-    }
+    /**
+     * Fishing rod as Item Stack
+     */
+    private final ItemStack mc_fishingRodItemStack;   //idk if I need a ref to the itemStack
 
-    public FishanomicFishingBobberEntity(Player player, Level level, int luck, int lureSpeed, @Nonnull ItemStack rod) {
+    /**
+     * Fishing rod item (Fishanomics Extended version)
+     */
+    private final FishanomicFishingRodItem fishingRod;
+
+    /**
+     * Constructor for fishing bobber
+     * @param player Player the bobber belongs to
+     * @param level MC world level?
+     * @param luck  Fishing rods Luck level
+     * @param lureSpeed Fishing rods Lure Speed
+     * @param fishingRod Fishing rod item
+     * @param rod Fishing rod item as ItemStack
+     */
+    public FishanomicFishingBobberEntity(Player player, Level level, int luck, int lureSpeed, FishanomicFishingRodItem fishingRod, @Nonnull ItemStack rod) {
         super(player, level, luck, lureSpeed);
         this.luck = luck;
         player.fishing = this;
-        this.fishingRod = rod;
+        this.mc_fishingRodItemStack = rod;
+        this.fishingRod = fishingRod;
     }
 
+
+    /**
+     * Pull interaction on fishing rod.
+     * Pulls itemLoot/player/entity/nothing and takes durability damage for that action
+     * @apiNote Changed the way a loot item is retrieved from loot table.
+     * @param stack The fishing rod? -> comes from item in held hand
+     * @return Amount of damage item should take
+     */
     @Override
     public int retrieve(@Nonnull ItemStack stack) {
         Player player = this.getPlayerOwner();
         Level level = this.level();
         if (!this.level().isClientSide && player != null && !this.shouldStopFishing(player)) {
-            int i = 0;
+            int i = 0;  //durability damage to take if not hooking fish loot
             net.neoforged.neoforge.event.entity.player.ItemFishedEvent event = null;
             if (this.getHookedIn() != null) {
                 this.pullEntity(this.getHookedIn());
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer) player, stack, this, Collections.emptyList());
                 this.level().broadcastEntityEvent(this, (byte) 31);
-                i = this.getHookedIn() instanceof ItemEntity ? 3 : 5;
+                i = this.getHookedIn() instanceof ItemEntity ? 3 : 5;   //Think it makes it take more durability dmg for player/block
             } else if (this.nibble > 0 && level instanceof ServerLevel serverLevel) {
 
                 LootParams lootparams = new LootParams.Builder((ServerLevel) this.level())
@@ -67,14 +91,15 @@ public class FishanomicFishingBobberEntity extends FishingHook {
                         .withParameter(LootContextParams.ATTACKING_ENTITY, this.getOwner())
                         .withLuck((float) this.luck + player.getLuck()) //Player luck assumed, try before, in the case of machines
                         .create(LootContextParamSets.FISHING);
-                //Vanilla
-//                LootTable loottable = this.level().getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
+                //Vanilla Looting
+                //LootTable loottable = this.level().getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
                 //List<ItemStack> list = loottable.getRandomItems(lootparams);
 
-                //Fishanomics
+                //Fishanomics Looting
                 List<ItemStack> list = getLoot(lootparams, serverLevel); //set in custom catching fish
 
-
+                //Rod durability damage set in this event
+                //I think this.onGround() checks if the item you hooked is on the ground? Eg, fished an item dropped on the floor
                 event = new net.neoforged.neoforge.event.entity.player.ItemFishedEvent(list, this.onGround() ? 2 : 1, this);
                 net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
                 if (event.isCanceled()) {
@@ -83,6 +108,8 @@ public class FishanomicFishingBobberEntity extends FishingHook {
                 }
                 CriteriaTriggers.FISHING_ROD_HOOKED.trigger((ServerPlayer) player, stack, this, list);
 
+                //For items fished, give xp and spwan item
+                //ItemStack holds the amount of an item
                 for (ItemStack itemstack : list) {
                     ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), itemstack);
                     double d0 = player.getX() - this.getX();
@@ -98,20 +125,37 @@ public class FishanomicFishingBobberEntity extends FishingHook {
                     }
                 }
 
-                i = 1;
+                i = 1;  //Hooked nothing, but used item, so take 1 durability dmg
             }
 
             if (this.onGround()) {
-                i = 2;
+                i = 2;  //If you hook a block on ground?
             }
 
             this.discard();
-            if (event != null) return event.getRodDamage();
-            return i;
+            if (event != null) return event.getRodDamage(); //Do durabilty damage
+            return i;   //Damage to take (none fishing loot)
         } else {
             return 0;
         }
     }
+
+
+    /**
+     * Used to get the loot item from the correct loot table
+     * @param lootParams Minecraft loot params, used to roll luck
+     * @param serverLevel Minecraft server level, used to get Registries of loot tables
+     * @return Item Stack rolled on loot table
+     */
+    private List<ItemStack> getLoot(LootParams lootParams, ServerLevel serverLevel){
+        ResourceKey<LootTable> lootTableLocation;
+        //I will need to register some loot tables
+        lootTableLocation = fishingRod.getFishingLootTable();
+        LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+        return lootTable.getRandomItems(lootParams);
+    }
+
+    //region === No use as of yet ===
 
     @Override
     protected boolean shouldStopFishing(Player player) {
@@ -126,15 +170,6 @@ public class FishanomicFishingBobberEntity extends FishingHook {
             return true;
         }
     }
-
-    private List<ItemStack> getLoot(LootParams lootParams, ServerLevel serverLevel){
-        ResourceKey<LootTable> lootTableLocation;
-        //I will need to register some loot tables
-        lootTableLocation = FishanomicLootTables.WOODEN_ROD;
-        LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
-        return lootTable.getRandomItems(lootParams);
-    }
-
 
     @Override
     protected void catchingFish(BlockPos pos) {
@@ -237,5 +272,7 @@ public class FishanomicFishingBobberEntity extends FishingHook {
             this.timeUntilLured = this.timeUntilLured - this.lureSpeed;
         }
     }
+
+    //endregion
 
 }

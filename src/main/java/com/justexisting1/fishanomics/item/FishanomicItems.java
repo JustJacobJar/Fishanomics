@@ -1,6 +1,7 @@
 package com.justexisting1.fishanomics.item;
 
 import com.justexisting1.fishanomics.Fishanomics;
+import com.justexisting1.fishanomics.init.FishanomicLootTables;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.common.extensions.IItemExtension;
@@ -32,13 +33,14 @@ public class FishanomicItems {
     public static final DeferredItem<Item> GOLD_HOOK = registerWithTab(SimpleItem::new, "gold_hook");
     public static final DeferredItem<Item> DIAMOND_HOOK = registerWithTab(SimpleItem::new, "diamond_hook");
 
+    //TODO: Change the loot tables that each rod points to
     //Fishing Rods
-    public static final DeferredItem<Item> WOODEN_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.WOOD, new Item.Properties().durability(59)), "wooden_fishing_rod");
-    public static final DeferredItem<Item> STONE_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.STONE, new Item.Properties().durability(131)), "stone_fishing_rod");
-    public static final DeferredItem<Item> IRON_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.IRON, new Item.Properties().durability(250)), "iron_fishing_rod");
-    public static final DeferredItem<Item> GOLD_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.GOLD, new Item.Properties().durability(32)), "gold_fishing_rod");
-    public static final DeferredItem<Item> DIAMOND_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.DIAMOND, new Item.Properties().durability(1561)), "diamond_fishing_rod");
-    public static final DeferredItem<Item> NETHERITE_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.NETHERITE, new Item.Properties().durability(2031)), "netherite_fishing_rod");
+    public static final DeferredItem<Item> WOODEN_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.WOOD, FishanomicLootTables.WOODEN_ROD, new Item.Properties().durability(59)), "wooden_fishing_rod");
+    public static final DeferredItem<Item> STONE_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.STONE, FishanomicLootTables.STONE_ROD, new Item.Properties().durability(131)), "stone_fishing_rod");
+    public static final DeferredItem<Item> IRON_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.IRON, FishanomicLootTables.IRON_ROD, new Item.Properties().durability(250)), "iron_fishing_rod");
+    public static final DeferredItem<Item> GOLD_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.GOLD, FishanomicLootTables.WOODEN_ROD, new Item.Properties().durability(32)), "gold_fishing_rod");
+    public static final DeferredItem<Item> DIAMOND_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.DIAMOND, FishanomicLootTables.WOODEN_ROD, new Item.Properties().durability(1561)), "diamond_fishing_rod");
+    public static final DeferredItem<Item> NETHERITE_FISHING_ROD = registerWithTab(() -> new FishanomicFishingRodItem(Tiers.NETHERITE, FishanomicLootTables.WOODEN_ROD, new Item.Properties().durability(2031)), "netherite_fishing_rod");
 
     public static DeferredItem<Item> register(Supplier<Item> initialiser, String name){
         return ITEMS.register(name, initialiser);

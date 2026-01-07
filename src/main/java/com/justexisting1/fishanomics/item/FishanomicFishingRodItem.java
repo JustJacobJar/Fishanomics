@@ -2,7 +2,6 @@ package com.justexisting1.fishanomics.item;
 
 import com.justexisting1.fishanomics.entity.FishanomicFishingBobberEntity;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -18,19 +17,48 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.event.EventHooks;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class FishanomicFishingRodItem extends FishingRodItem {
-    private final Tier tier;
+
+    /**
+     * Fishing rod Minecraft Tier
+     * Built into MC Wood -> Netherite
+     * Used for things such as durability, enchant value...
+     */
+    private final Tiers tier;   //TODO: Extend Tiers with my own types for new materials
+
+    /**
+     * Lure bonus for rod
+     */
     private final int lureBonus;
-    private List<ResourceKey<Enchantment>> supportedEnchants = List.of(Enchantments.FORTUNE, Enchantments.UNBREAKING, Enchantments.LURE, Enchantments.LUCK_OF_THE_SEA, Enchantments.MENDING);
+
+    /**
+     * Loot table used by the fishing rod
+     */
+    private final ResourceKey<LootTable> fishingLootTable;
+
+    /**
+     * Getter for fishing rod loot table
+     * @return Loot table ResourceKey
+     */
+    public ResourceKey<LootTable> getFishingLootTable() {
+        return fishingLootTable;
+    }
+
+
+    /**
+     * Supported Enchantments for the rod
+     */
+    private final List<ResourceKey<Enchantment>> supportedEnchants = List.of(Enchantments.FORTUNE,
+            Enchantments.UNBREAKING, Enchantments.LURE, Enchantments.LUCK_OF_THE_SEA, Enchantments.MENDING);
+
+    //region Enchentment Overrides
 
     @Override
     public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
@@ -47,12 +75,20 @@ public class FishanomicFishingRodItem extends FishingRodItem {
 //        return this.supportsEnchantment(stack, enchantment) && (primaryItems.isEmpty() || stack.is(primaryItems.get())) || enchantment.equals(Enchantments.FORTUNE);
     }
 
-    public FishanomicFishingRodItem(Tier tier, Properties properties) {
+    //endregion
+
+    /**
+     * Constructor fior a Fishanomics Fishing Rod
+     * @param tier Tier of the rod
+     * @param properties Item Properties
+     */
+    public FishanomicFishingRodItem(Tiers tier, ResourceKey<LootTable> fishingLootTable, Properties properties) {
         super(properties);
         this.tier = tier;
+        this.fishingLootTable = fishingLootTable;
         switch (tier){
             case Tiers.WOOD:
-                this.lureBonus = 20;
+                this.lureBonus = 20;    //These will get set in the new Tier type I make
                 break;
             case Tiers.STONE:
                 this.lureBonus = 40;
@@ -75,10 +111,10 @@ public class FishanomicFishingRodItem extends FishingRodItem {
         }
     }
 
-    //posibly some variables saying which loot table to look at eg,
-    //private int fishingLevel = 2 -> Points to iron fishing rod loot table. This will be read in the loot table through loot params in retrieve
-    //make a getter for sure, its private
-
+    /**
+     * @apiNote Changed the bobber entity passed in.
+     * Now uses custom Fishanomics version
+     */
     @Override
     @Nonnull
     public InteractionResultHolder<ItemStack> use(@Nonnull Level level, Player player, @Nonnull InteractionHand hand) {
@@ -88,6 +124,7 @@ public class FishanomicFishingRodItem extends FishingRodItem {
 //        return new InteractionResultHolder<>(InteractionResult.FAIL, heldStack);    //Figure out why New is used here??? Only place, seems related to attacking
 
         if (player.fishing != null) {
+            //Server processes item taking damage???
             if (!level.isClientSide) {
                 int i = player.fishing.retrieve(heldStack);
 
@@ -97,7 +134,7 @@ public class FishanomicFishingRodItem extends FishingRodItem {
                     EventHooks.onPlayerDestroyItem(player, original, hand);
                 }
             }
-
+            //Player should stop fishing, pull in bobber
             level.playSound(
                     null,
                     player.getX(),
@@ -109,7 +146,7 @@ public class FishanomicFishingRodItem extends FishingRodItem {
                     0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
             );
             player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
-        } else {
+        } else {    //Player should start fishing, throw bobber
             level.playSound(
                     null,
                     player.getX(),
@@ -120,11 +157,14 @@ public class FishanomicFishingRodItem extends FishingRodItem {
                     0.5F,
                     0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F)
             );
+
+            //Creates the Fishing Bobber to simulate fishing and get a loot item/not
             if (level instanceof ServerLevel serverlevel) {
                 int lureSpeed = (int) (EnchantmentHelper.getFishingTimeReduction(serverlevel, heldStack, player) * 20.0F);
                 lureSpeed += lureBonus;
                 int luck = EnchantmentHelper.getFishingLuckBonus(serverlevel, heldStack, player);
-                level.addFreshEntity(new FishanomicFishingBobberEntity(player, level, luck, lureSpeed, heldStack)); //This casts the bobber -> recieves the reward
+                //check if I have passed "this" in right
+                level.addFreshEntity(new FishanomicFishingBobberEntity(player, level, luck, lureSpeed, this, heldStack)); //This casts the bobber -> recieves the reward
             }
 
             player.awardStat(Stats.ITEM_USED.get(this));
