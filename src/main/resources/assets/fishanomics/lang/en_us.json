@@ -14,6 +14,7 @@
   "item.fishanomics.netherite_fishing_rod" : "Netherite Fishing Rod",
 
   "block.fishanomics.fish_tank" : "Fish Tank",
+  "block.fishanomics.fish_furnace": "Fish Furnace",
 
   "creativetab.fishanomics.fishanomics_items" : "Fishanomics Items",
   "creativetab.fishanomics.fishanomics_blocks" : "Fishanomics Blocks"

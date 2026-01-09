@@ -30,6 +30,9 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.fishanomics.fishanomics_blocks"))
                     .displayItems(((itemDisplayParameters, output) -> {
                         output.accept(ModBlocks.FISH_TANK);
+
+                        //Fish Processing Blocks
+                        output.accept(ModBlocks.FISH_FURNACE.get());
                     })).build());
 
     public static void register(IEventBus eventBus) {

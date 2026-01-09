@@ -1,6 +1,7 @@
 package com.justexisting1.fishanomics;
 
 import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.entity.ModBlockEntities;
 import com.justexisting1.fishanomics.client.ClientHandler;
 import com.justexisting1.fishanomics.item.ModCreativeModeTabs;
 import com.justexisting1.fishanomics.item.FishanomicItems;
@@ -65,6 +66,7 @@ public class Fishanomics {
         //Pulls list of mod items -> registers them
         FishanomicItems.ITEMS.register(eventBus);
         ModBlocks.register(eventBus);
+        ModBlockEntities.register(eventBus);
 
         // Register the item to a creative tab
         ModCreativeModeTabs.register(eventBus);
