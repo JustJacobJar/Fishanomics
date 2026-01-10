@@ -1,6 +1,7 @@
 package com.justexisting1.fishanomics.block.entity;
 
 import com.justexisting1.fishanomics.item.FishanomicItems;
+import com.justexisting1.fishanomics.screen.custom.FishFurnaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -40,8 +41,8 @@ public class FishFurnaceBlockEntity extends BlockEntity implements MenuProvider 
     };
 
     //Index of the slots
-    private static final int INPUT_SLOT = 0;
-    private static final int OUTPUT_SLOT = 1;
+    public static final int INPUT_SLOT = 0;
+    public static final int OUTPUT_SLOT = 1;
 
     //Lets us sync the data with server to client + UI
     protected final ContainerData data;
@@ -69,10 +70,9 @@ public class FishFurnaceBlockEntity extends BlockEntity implements MenuProvider 
             public void set(int index, int value) {
                 switch (index) {
                     //If doesnt work, use : switch case
-                    case 0 -> FishFurnaceBlockEntity.this.progress = value;
-                    case 1 -> FishFurnaceBlockEntity.this.maxProgress = value;
-                }
-                ;
+                    case 0: FishFurnaceBlockEntity.this.progress = value;
+                    case 1: FishFurnaceBlockEntity.this.maxProgress = value;
+                };
             }
 
             //Number of vars to save
@@ -91,8 +91,7 @@ public class FishFurnaceBlockEntity extends BlockEntity implements MenuProvider 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        //TODO: Make the menu
-        return;
+        return new FishFurnaceMenu(containerId, playerInventory, this, this.data);
     }
 
     /**

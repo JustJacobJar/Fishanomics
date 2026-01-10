@@ -73,7 +73,7 @@ public class FishFurnaceBlock extends BaseEntityBlock {
             if (entity instanceof FishFurnaceBlockEntity fishFurnaceBlockEntity) {
                 ((ServerPlayer) player).openMenu(new SimpleMenuProvider(fishFurnaceBlockEntity, Component.literal("Fish Furnace")), pos);
             } else {
-                throw new IllegalStateException("Our container provide3r is missing!");
+                throw new IllegalStateException("Our container provider is missing!");
             }
         }
 

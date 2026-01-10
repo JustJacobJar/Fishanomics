@@ -21,7 +21,7 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> FISH_TANK = registerBlock("fish_tank",
             () -> new Block(BlockBehaviour.Properties.of()
-                    .strength(4f).requiresCorrectToolForDrops().sound(SoundType.ANCIENT_DEBRIS)));
+                    .strength(4f).requiresCorrectToolForDrops().sound(SoundType.ANCIENT_DEBRIS))); //call no loot table if not drop
 
     public static final DeferredBlock<Block> FISH_FURNACE = registerBlock("fish_furnace",
             () -> new FishFurnaceBlock(BlockBehaviour.Properties.of()));
