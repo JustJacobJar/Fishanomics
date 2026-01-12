@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "s": {
+      "item": "minecraft:stone"
+    }
+  },
+  "pattern": [
+    "  s",
+    "c c",
+    " c "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fishanomics:stone_hook"
+  }
+}

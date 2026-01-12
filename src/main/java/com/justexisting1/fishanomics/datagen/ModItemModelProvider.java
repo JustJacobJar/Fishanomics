@@ -21,14 +21,21 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        //Fishing Rods
 
+        //Fishing Rods
         fishingRod(FishanomicItems.WOODEN_FISHING_ROD.get());
         fishingRod(FishanomicItems.STONE_FISHING_ROD.get());
         fishingRod(FishanomicItems.IRON_FISHING_ROD.get());
         fishingRod(FishanomicItems.GOLD_FISHING_ROD.get());
         fishingRod(FishanomicItems.DIAMOND_FISHING_ROD.get());
         fishingRod(FishanomicItems.NETHERITE_FISHING_ROD.get());
+
+        //Fishing Hooks
+        basicItem(FishanomicItems.WOODEN_HOOK.get());
+        basicItem(FishanomicItems.STONE_HOOK.get());
+        basicItem(FishanomicItems.IRON_HOOK.get());
+        basicItem(FishanomicItems.GOLD_HOOK.get());
+        basicItem(FishanomicItems.DIAMOND_HOOK.get());
 
         //Fish Ores
         basicItem(FishanomicItems.COAL_FISH.get());

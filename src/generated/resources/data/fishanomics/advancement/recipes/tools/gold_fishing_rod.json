@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gold_hook": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fishanomics:gold_hook"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fishanomics:gold_fishing_rod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gold_hook"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fishanomics:gold_fishing_rod"
+    ]
+  }
+}

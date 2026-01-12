@@ -1,0 +1,3 @@
+// 1.21.1	2026-01-11T23:37:48.9222669	Tags for minecraft:block mod id fishanomics
+d87d338090fd4e4d7fcd12ebcd95a19462f22cdd data/minecraft/tags/block/mineable/pickaxe.json
+bcd3b3bd983f3e6d6cc9950a980e4cbbf9e9d853 data/minecraft/tags/block/needs_stone_tool.json

@@ -50,7 +50,6 @@ public class Fishanomics {
 
 
 //        modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(this::gatherData);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -92,9 +91,6 @@ public class Fishanomics {
 
     }
 
-    public void gatherData(GatherDataEvent event) {
-        DataGen.gatherData(event);
-    }
 
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {

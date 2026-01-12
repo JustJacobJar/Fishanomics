@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_diamond_hook": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fishanomics:diamond_hook"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fishanomics:diamond_fishing_rod"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_diamond_hook"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fishanomics:diamond_fishing_rod"
+    ]
+  }
+}

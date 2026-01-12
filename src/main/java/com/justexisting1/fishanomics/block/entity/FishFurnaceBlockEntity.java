@@ -2,6 +2,7 @@ package com.justexisting1.fishanomics.block.entity;
 
 import com.justexisting1.fishanomics.item.FishanomicItems;
 import com.justexisting1.fishanomics.screen.custom.FishFurnaceMenu;
+import com.justexisting1.fishanomics.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -169,7 +170,7 @@ public class FishFurnaceBlockEntity extends BlockEntity implements MenuProvider 
      */
     private boolean hasRecipe(ItemStack item) {
         //Will update to be dynamic later
-        return item.is(FishanomicItems.IRON_FISH);
+        return item.is(ModTags.Items.SMELTABLE_ITEMS);
     }
 
     /**
