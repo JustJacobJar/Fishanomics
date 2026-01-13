@@ -2,6 +2,7 @@ package com.justexisting1.fishanomics.item;
 
 import com.justexisting1.fishanomics.Fishanomics;
 import com.justexisting1.fishanomics.init.FishanomicLootTables;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 import net.neoforged.neoforge.common.extensions.IItemExtension;

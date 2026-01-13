@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:gold_block"
+    },
+    "i": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "  b",
+    "i i",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fishanomics:gold_hook"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:iron_block"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "  b",
+    "i i",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fishanomics:iron_hook"
+  }
+}

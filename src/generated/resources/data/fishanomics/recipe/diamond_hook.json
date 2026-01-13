@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:diamond_block"
+    },
+    "i": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "  b",
+    "i i",
+    " i "
+  ],
+  "result": {
+    "count": 1,
+    "id": "fishanomics:diamond_hook"
+  }
+}

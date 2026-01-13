@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fishanomics:coal_fish"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "fishanomics:fish_tank"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_iron_fish": {
+      "conditions": {
+        "items": [
+          {
+            "items": "fishanomics:iron_fish"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "fishanomics:iron_ingot_from_smelting_iron_fish"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_iron_fish"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "fishanomics:iron_ingot_from_smelting_iron_fish"
+    ]
+  }
+}

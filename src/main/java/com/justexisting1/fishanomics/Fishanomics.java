@@ -1,10 +1,13 @@
 package com.justexisting1.fishanomics;
 
 import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.entity.ModBlockEntities;
 import com.justexisting1.fishanomics.client.ClientHandler;
 import com.justexisting1.fishanomics.item.ModCreativeModeTabs;
 import com.justexisting1.fishanomics.item.FishanomicItems;
 
+import com.justexisting1.fishanomics.screen.FishanomicsMenuTypes;
+import com.justexisting1.fishanomics.screen.custom.FishFurnaceScreen;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +22,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -45,9 +49,7 @@ public class Fishanomics {
         NeoForge.EVENT_BUS.register(this);
 
 
-
 //        modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(this::gatherData);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -57,14 +59,16 @@ public class Fishanomics {
 
     }
 
-    private void setupClient(FMLClientSetupEvent event){
+    private void setupClient(FMLClientSetupEvent event) {
         event.enqueueWork(ClientHandler::setupClient);
     }
 
-    public void registerDeferredRegistries(IEventBus eventBus){
+    public void registerDeferredRegistries(IEventBus eventBus) {
         //Pulls list of mod items -> registers them
         FishanomicItems.ITEMS.register(eventBus);
         ModBlocks.register(eventBus);
+        ModBlockEntities.register(eventBus);
+        FishanomicsMenuTypes.register(eventBus);
 
         // Register the item to a creative tab
         ModCreativeModeTabs.register(eventBus);
@@ -87,9 +91,14 @@ public class Fishanomics {
 
     }
 
-    public void gatherData(GatherDataEvent event)
-    {
-        DataGen.gatherData(event);
-    }
 
+    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents {
+
+
+        @SubscribeEvent
+        public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+            event.register(FishanomicsMenuTypes.FISH_FURNACE_MENU.get(), FishFurnaceScreen::new);
+        }
+    }
 }
