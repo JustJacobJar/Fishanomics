@@ -2,7 +2,7 @@
   "type:": "minecraft:fishing",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -55,7 +55,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:oak_plank",
+          "name": "minecraft:oak_planks",
           "weight": 10,
           "quality": 1,
           "functions": [
@@ -100,12 +100,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:mossy_cobblestone",
-          "weight": 4,
-          "quality": 0
         }
       ]}],
   "random_sequence": "fishanomics:fishing/resource_blocks"
