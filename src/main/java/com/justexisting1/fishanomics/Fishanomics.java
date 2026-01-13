@@ -2,7 +2,6 @@ package com.justexisting1.fishanomics;
 
 import com.justexisting1.fishanomics.block.ModBlocks;
 import com.justexisting1.fishanomics.client.ClientHandler;
-import com.justexisting1.fishanomics.item.FishanomicFishingRodItem;
 import com.justexisting1.fishanomics.item.ModCreativeModeTabs;
 import com.justexisting1.fishanomics.item.FishanomicItems;
 
