@@ -1,0 +1,6 @@
+{
+  "durability": 5,
+  "fishing_rod": "fishanomics:obi",
+  "loot_table": "fishanomics:fishing/rod_tables/iron_rod",
+  "lure": 120
+}

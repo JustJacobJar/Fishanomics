@@ -1,6 +1,8 @@
-// 1.21.1	2026-01-11T23:37:48.9207671	Item Models: fishanomics
+// 1.21.1	2026-01-14T17:32:04.0216084	Item Models: fishanomics
 ebfaa933632b0ddd3ff5b1d7e73056d4099bcd2b assets/fishanomics/models/item/coal_fish.json
 b0f59ddbe02a006152f505f8dc461726cfefccd6 assets/fishanomics/models/item/copper_fish.json
+112815c1d3617585fc3e238e2fc6063c7dc1138d assets/fishanomics/models/item/custom_fishing_rod.json
+395bca1d387893d8bd31900c85ef40d23ae8d9a2 assets/fishanomics/models/item/custom_fishing_rod_cast.json
 bfbc2372bd4dd1c356b6f6a90a5e2719bbdb8597 assets/fishanomics/models/item/diamond_fish.json
 f62054a5e18587979f1dc5dcb96530590e1bf35a assets/fishanomics/models/item/diamond_fishing_rod.json
 fad61fa9a224606f80d2c327609c4c79852cf08e assets/fishanomics/models/item/diamond_fishing_rod_cast.json

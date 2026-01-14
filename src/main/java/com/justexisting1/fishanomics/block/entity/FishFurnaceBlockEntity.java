@@ -1,6 +1,5 @@
 package com.justexisting1.fishanomics.block.entity;
 
-import com.justexisting1.fishanomics.item.FishanomicItems;
 import com.justexisting1.fishanomics.screen.custom.FishFurnaceMenu;
 import com.justexisting1.fishanomics.util.ModTags;
 import net.minecraft.core.BlockPos;
@@ -17,7 +16,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -54,7 +52,7 @@ public class FishFurnaceBlockEntity extends BlockEntity implements MenuProvider 
 
 
     public FishFurnaceBlockEntity(BlockPos pos, BlockState blockState) {
-        super(ModBlockEntities.FISH_FURNACE_BE.get(), pos, blockState);
+        super(FishanomicBlockEntities.FISH_FURNACE_BE.get(), pos, blockState);
         //Sync client/server for UI
         data = new ContainerData() {
             @Override

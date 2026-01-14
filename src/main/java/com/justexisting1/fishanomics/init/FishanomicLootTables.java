@@ -10,17 +10,31 @@ import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class FishanomicLootTables {
 
-    public static final ResourceKey<LootTable> FISH = register("fishing/fish");
-    public static final ResourceKey<LootTable> RESOURCE_BLOCKS = register("fishing/resource_blocks");
-    public static final ResourceKey<LootTable> WOODEN_ROD = register("fishing/tiers/wooden_rod");
-    public static final ResourceKey<LootTable> STONE_ROD = register("fishing/tiers/stone_rod");
-    public static final ResourceKey<LootTable> IRON_ROD = register("fishing/tiers/iron_rod");
+    //Why these exist?
+    //These are here as hardcoded paths that get used in my generators to actually make the table.
+    //The only difference between hand writing these paths and not, is that these are stored against a variable.
+    //This allows me to use these as default values for my default fishing rods that I will similarly make
+    public static final ResourceKey<LootTable> FISH = register("fish");
+    public static final ResourceKey<LootTable> RESOURCE_BLOCKS = register("resource_blocks");
+    public static final ResourceKey<LootTable> WOODEN_ROD = registerRod("wooden_rod");
+    public static final ResourceKey<LootTable> STONE_ROD = registerRod("stone_rod");
+    public static final ResourceKey<LootTable> IRON_ROD = registerRod("iron_rod");
+
+    private static final String BASE_PATH = "fishing/";
+    private static final String BASE_PATH_ROD = "fishing/rod_tables/";
 
     private static ResourceKey<LootTable> register(String path){
-        return BuiltInLootTables.register(ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID, path)));
+        return ResourceKey.create(Registries.LOOT_TABLE,
+                ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID,  BASE_PATH + path));
+    }
+
+    private static ResourceKey<LootTable> registerRod(String path){
+        return ResourceKey.create(Registries.LOOT_TABLE,
+                ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID,  BASE_PATH_ROD + path));
     }
 
 }

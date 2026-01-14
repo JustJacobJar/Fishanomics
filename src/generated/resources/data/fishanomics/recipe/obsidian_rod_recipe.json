@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "item": "minecraft:string"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "  O",
+    " O#",
+    "S #"
+  ],
+  "result": {
+    "components": {
+      "fishanomics:fishing_rod_data": "fishanomics:obi"
+    },
+    "count": 1,
+    "id": "fishanomics:custom_fishing_rod"
+  }
+}

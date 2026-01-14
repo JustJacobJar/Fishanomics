@@ -1,0 +1,45 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:acacia_planks",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:acacia_log",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:loot_table",
+          "value": "fishanomics:fishing/fish",
+          "weight": -3
+        }
+      ],
+      "functions": [
+        {
+          "enchantment": "minecraft:fortune",
+          "formula": "minecraft:ore_drops",
+          "function": "minecraft:apply_bonus"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "fishanomics:fishing/rod_tables/wooden_rod"
+}

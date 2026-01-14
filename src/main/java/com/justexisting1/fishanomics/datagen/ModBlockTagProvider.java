@@ -1,7 +1,7 @@
 package com.justexisting1.fishanomics.datagen;
 
 import com.justexisting1.fishanomics.Fishanomics;
-import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -20,12 +20,12 @@ public class ModBlockTagProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.Provider provider) {
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.FISH_FURNACE.get())
-                .add(ModBlocks.FISH_TANK.get());
+                .add(FishanomicsBlocks.FISH_FURNACE.get())
+                .add(FishanomicsBlocks.FISH_TANK.get());
 
 
         tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(ModBlocks.FISH_FURNACE.get());
+                .add(FishanomicsBlocks.FISH_FURNACE.get());
 
     }
 }

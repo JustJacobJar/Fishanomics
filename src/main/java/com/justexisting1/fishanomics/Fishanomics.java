@@ -1,18 +1,16 @@
 package com.justexisting1.fishanomics;
 
-import com.justexisting1.fishanomics.block.ModBlocks;
-import com.justexisting1.fishanomics.block.entity.ModBlockEntities;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
+import com.justexisting1.fishanomics.block.entity.FishanomicBlockEntities;
 import com.justexisting1.fishanomics.client.ClientHandler;
-import com.justexisting1.fishanomics.item.ModCreativeModeTabs;
+import com.justexisting1.fishanomics.component.FishanomicDataComponents;
+import com.justexisting1.fishanomics.fishingrods.FishingRodProperties;
+import com.justexisting1.fishanomics.item.FishanomicCreativeModeTabs;
 import com.justexisting1.fishanomics.item.FishanomicItems;
 
 import com.justexisting1.fishanomics.screen.FishanomicsMenuTypes;
 import com.justexisting1.fishanomics.screen.custom.FishFurnaceScreen;
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.FishingRodItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -24,8 +22,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -66,12 +64,13 @@ public class Fishanomics {
     public void registerDeferredRegistries(IEventBus eventBus) {
         //Pulls list of mod items -> registers them
         FishanomicItems.ITEMS.register(eventBus);
-        ModBlocks.register(eventBus);
-        ModBlockEntities.register(eventBus);
+        FishanomicsBlocks.register(eventBus);
+        FishanomicBlockEntities.register(eventBus);
         FishanomicsMenuTypes.register(eventBus);
+        FishanomicDataComponents.register(eventBus);
 
         // Register the item to a creative tab
-        ModCreativeModeTabs.register(eventBus);
+        FishanomicCreativeModeTabs.register(eventBus);
     }
 
     // Add the example block item to the building blocks tab
@@ -91,9 +90,38 @@ public class Fishanomics {
 
     }
 
+    // REMOVE value = Dist.CLIENT so this runs on Servers too!
+    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD)
+    public static class ModEvents {
+
+        @SubscribeEvent
+        public static void addRegistries(DataPackRegistryEvent.NewRegistry event) {
+            event.dataPackRegistry(
+                    FishingRodProperties.FISHING_ROD_REGISTRY_KEY,
+                    FishingRodProperties.CODEC,
+                    FishingRodProperties.CODEC // Use the StreamCodec for syncing!
+            );
+        }
+
+//        @SubscribeEvent
+//        public static void addRegistries(DataPackRegistryEvent.NewRegistry event){
+//            event.dataPackRegistry(
+//                    FishingRodProperties.FISHING_ROD_REGISTRY_KEY,
+//                    FishingRodProperties.CODEC,
+//                    // The network codec of the registry contents. Often identical to the normal codec.
+//                    // May be a reduced variant of the normal codec that omits data that is not needed on the client.
+//                    // May be null. If null, registry entries will not be synced to the client at all.
+//                    // May be omitted, which is functionally identical to passing null (a method overload
+//                    // with two parameters is called that passes null to the normal three parameter method).
+//                    FishingRodProperties.STREAM_CODEC
+//            );
+//        }
+    }
 
     @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
+
+
 
 
         @SubscribeEvent

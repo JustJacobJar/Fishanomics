@@ -1,6 +1,6 @@
 package com.justexisting1.fishanomics.screen.custom;
 
-import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
 import com.justexisting1.fishanomics.block.entity.FishFurnaceBlockEntity;
 import com.justexisting1.fishanomics.screen.FishanomicsMenuTypes;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
-import org.jetbrains.annotations.Nullable;
 
 public class FishFurnaceMenu extends AbstractContainerMenu {
 
@@ -112,7 +111,7 @@ public class FishFurnaceMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.FISH_FURNACE.get());
+        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, FishanomicsBlocks.FISH_FURNACE.get());
     }
 
 

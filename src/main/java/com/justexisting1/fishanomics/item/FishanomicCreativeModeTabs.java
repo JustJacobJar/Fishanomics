@@ -1,7 +1,7 @@
 package com.justexisting1.fishanomics.item;
 
 import com.justexisting1.fishanomics.Fishanomics;
-import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public class ModCreativeModeTabs {
+public class FishanomicCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TAB =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Fishanomics.MOD_ID);
 
@@ -25,14 +25,14 @@ public class ModCreativeModeTabs {
 
     //Refactor to be the same as above
     public static final Supplier<CreativeModeTab> FISHANOMICS_BLOCK_TAB = CREATIVE_MODE_TAB.register("fishanomics_blocks_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModBlocks.FISH_TANK.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(FishanomicsBlocks.FISH_TANK.get()))
                     .withTabsBefore(ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID, "fishanomics_items_tab"))
                     .title(Component.translatable("creativetab.fishanomics.fishanomics_blocks"))
                     .displayItems(((itemDisplayParameters, output) -> {
-                        output.accept(ModBlocks.FISH_TANK);
+                        output.accept(FishanomicsBlocks.FISH_TANK);
 
                         //Fish Processing Blocks
-                        output.accept(ModBlocks.FISH_FURNACE.get());
+                        output.accept(FishanomicsBlocks.FISH_FURNACE.get());
                     })).build());
 
     public static void register(IEventBus eventBus) {

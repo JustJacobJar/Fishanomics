@@ -1,7 +1,7 @@
 package com.justexisting1.fishanomics.datagen;
 
 import com.justexisting1.fishanomics.Fishanomics;
-import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -21,8 +21,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         //Add models here
-        blockWithItem(ModBlocks.FISH_FURNACE);
-        blockWithItem(ModBlocks.FISH_TANK);
+        blockWithItem(FishanomicsBlocks.FISH_FURNACE);
+        blockWithItem(FishanomicsBlocks.FISH_TANK);
     }
 
     /**

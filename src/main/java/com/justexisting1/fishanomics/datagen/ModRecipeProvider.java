@@ -1,20 +1,22 @@
 package com.justexisting1.fishanomics.datagen;
 
 import com.justexisting1.fishanomics.Fishanomics;
-import com.justexisting1.fishanomics.block.ModBlocks;
+import com.justexisting1.fishanomics.block.FishanomicsBlocks;
+import com.justexisting1.fishanomics.component.FishanomicDataComponents;
 import com.justexisting1.fishanomics.item.FishanomicItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         fishingHookRecipies(recipeOutput);
 
         //Shaped Recipe
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.FISH_FURNACE.get())
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, FishanomicsBlocks.FISH_FURNACE.get())
                 .pattern("ccc")
                 .pattern("cfc")
                 .pattern("ccc")
@@ -45,7 +47,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         //Shapeless Recipe
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModBlocks.FISH_TANK, 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, FishanomicsBlocks.FISH_TANK, 9)
                 .requires(FishanomicItems.COAL_FISH)
                 .unlockedBy("has_coal_fish", has(FishanomicItems.COAL_FISH))
                 //This is used to prevent conflicting, DEFAULTS to output item name
@@ -109,7 +111,26 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         netheriteSmithing(recipeOutput, FishanomicItems.DIAMOND_FISHING_ROD.get(), RecipeCategory.TOOLS, FishanomicItems.NETHERITE_FISHING_ROD.get());
+
+        //Data driven rod
+        //1. Define result
+        ItemStack obsidianRodResult = new ItemStack(FishanomicItems.CUSTOM_FISHING_ROD.get());
+        //2. Set custom data component
+        obsidianRodResult.set(FishanomicDataComponents.FISHING_ROD_DATA.get(),
+                ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID, "obi"));
+        //3. Set up recipe
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, obsidianRodResult)
+                .pattern("  O")
+                .pattern(" O#")
+                .pattern("S #")
+                .define('O', Items.OBSIDIAN)
+                .define('S', Items.STICK)
+                .define('#', Items.STRING)
+                .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
+                // This attaches the component pointing to our registry ID
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(Fishanomics.MOD_ID, "obsidian_rod_recipe"));
     }
+
 
 
     private void fishingHookRecipies(RecipeOutput recipeOutput){

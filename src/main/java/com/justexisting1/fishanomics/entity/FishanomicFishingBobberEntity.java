@@ -38,7 +38,10 @@ public class FishanomicFishingBobberEntity extends FishingHook {
     /**
      * Fishing rod as Item Stack
      */
-    private final ItemStack mc_fishingRodItemStack;   //idk if I need a ref to the itemStack
+    private final ItemStack mc_fishingRodItemStack;
+    //I need to get the data component from the item which contains the loot table locations, luck...
+    //Or is this just on the fishingrod item i pass in???
+    //Im pretty sure by this point in the code, the ItemStack and Fishing rod I pass in are the same Item
 
     /**
      * Fishing rod item (Fishanomics Extended version)
@@ -96,7 +99,7 @@ public class FishanomicFishingBobberEntity extends FishingHook {
                 //List<ItemStack> list = loottable.getRandomItems(lootparams);
 
                 //Fishanomics Looting
-                List<ItemStack> list = getLoot(lootparams, serverLevel); //set in custom catching fish
+                List<ItemStack> list = getLoot(lootparams, serverLevel, stack); //set in custom catching fish
 
                 //Rod durability damage set in this event
                 //I think this.onGround() checks if the item you hooked is on the ground? Eg, fished an item dropped on the floor
@@ -147,11 +150,12 @@ public class FishanomicFishingBobberEntity extends FishingHook {
      * @param serverLevel Minecraft server level, used to get Registries of loot tables
      * @return Item Stack rolled on loot table
      */
-    private List<ItemStack> getLoot(LootParams lootParams, ServerLevel serverLevel){
-        ResourceKey<LootTable> lootTableLocation;
-        //I will need to register some loot tables
-        lootTableLocation = fishingRod.getFishingLootTable();
-        LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+    private List<ItemStack> getLoot(LootParams lootParams, ServerLevel serverLevel, ItemStack item){
+//        ResourceKey<LootTable> lootTableLocation;
+//        //I will need to register some loot tables
+//        lootTableLocation = fishingRod.getFishingLootTable(item);
+//        LootTable lootTable = serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+        LootTable lootTable = fishingRod.getLootTable(item, serverLevel);   //get the table from data component
         return lootTable.getRandomItems(lootParams);
     }
 

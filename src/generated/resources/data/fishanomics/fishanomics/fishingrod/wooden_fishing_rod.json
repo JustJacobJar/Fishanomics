@@ -1,0 +1,6 @@
+{
+  "durability": 59,
+  "fishing_rod": "fishanomics:wooden_fishing_rod",
+  "loot_table": "fishanomics:fishing/rod_tables/wooden_rod",
+  "lure": 100
+}

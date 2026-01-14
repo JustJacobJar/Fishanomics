@@ -22,6 +22,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
 
+        //TODO: Make these get read from a collection and looped over -> easier automation
         //Fishing Rods
         fishingRod(FishanomicItems.WOODEN_FISHING_ROD.get());
         fishingRod(FishanomicItems.STONE_FISHING_ROD.get());
@@ -29,6 +30,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         fishingRod(FishanomicItems.GOLD_FISHING_ROD.get());
         fishingRod(FishanomicItems.DIAMOND_FISHING_ROD.get());
         fishingRod(FishanomicItems.NETHERITE_FISHING_ROD.get());
+
+        fishingRod(FishanomicItems.CUSTOM_FISHING_ROD.get());
 
         //Fishing Hooks
         basicItem(FishanomicItems.WOODEN_HOOK.get());

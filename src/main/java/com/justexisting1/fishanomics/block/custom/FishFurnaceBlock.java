@@ -1,7 +1,7 @@
 package com.justexisting1.fishanomics.block.custom;
 
 import com.justexisting1.fishanomics.block.entity.FishFurnaceBlockEntity;
-import com.justexisting1.fishanomics.block.entity.ModBlockEntities;
+import com.justexisting1.fishanomics.block.entity.FishanomicBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -90,7 +90,7 @@ public class FishFurnaceBlock extends BaseEntityBlock {
         }
 
         //Tick entity in block entity will get called every tick
-        return createTickerHelper(blockEntityType, ModBlockEntities.FISH_FURNACE_BE.get(),
+        return createTickerHelper(blockEntityType, FishanomicBlockEntities.FISH_FURNACE_BE.get(),
                 (nLevel, blockPos, blockState, blockEntity) -> blockEntity.tick(nLevel, blockPos, blockState));
     }
 }

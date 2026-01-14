@@ -1,8 +1,13 @@
 package com.justexisting1.fishanomics.item;
 
+import com.justexisting1.fishanomics.Fishanomics;
+import com.justexisting1.fishanomics.fishingrods.FishingRodProperties;
 import com.justexisting1.fishanomics.entity.FishanomicFishingBobberEntity;
+import com.justexisting1.fishanomics.init.FishanomicLootTables;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,12 +22,15 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+
+import static com.justexisting1.fishanomics.component.FishanomicDataComponents.FISHING_ROD_DATA;
 
 public class FishanomicFishingRodItem extends FishingRodItem {
 
@@ -31,24 +39,66 @@ public class FishanomicFishingRodItem extends FishingRodItem {
      * Built into MC Wood -> Netherite
      * Used for things such as durability, enchant value...
      */
-    private final Tiers tier;   //TODO: Extend Tiers with my own types for new materials
+//    private final Tiers tier;   //TODO: Extend Tiers with my own types for new materials
+
 
     /**
      * Lure bonus for rod
      */
-    private final int lureBonus;
+    //    private final int lureBonus;
+
+    public LootTable getLootTable(ItemStack item, Level level){
+        // 1. Get your custom rod properties
+        FishingRodProperties properties = FishingRodProperties.getProperties(item, level);
+        if(properties != null){
+            try {
+            // 2. Extract the ResourceLocation stored in the record
+            // This 'location' already knows its own namespace!
+            ResourceLocation location = properties.lootTable();
+            // 3. Create the Key using the raw location
+            ResourceKey<LootTable> key = ResourceKey.create(Registries.LOOT_TABLE, location);
+            // 4. Fetch from the server's reloadable registries
+            // This works for both your built-in tables and modpack creator tables
+            return level.getServer().reloadableRegistries().getLootTable(key);
+
+            }catch (Exception ex){
+                System.out.println("Something went wrong with the getServer().reloadableRegistries(): " + ex.getMessage());
+                //Get default table, otherwise empty just in case
+                if(level instanceof ServerLevel serverLevel){
+                    return level.getServer().reloadableRegistries().getLootTable(BuiltInLootTables.FISHING);
+                }
+                return LootTable.EMPTY;
+            }
+        }
+        return LootTable.EMPTY;
+    }
+
+    public int getLureBonus(ItemStack item, Level level){
+        FishingRodProperties properties = FishingRodProperties.getProperties(item, level);
+        if(properties != null){
+            return properties.lure();
+        }
+        return 0;
+    }
 
     /**
      * Loot table used by the fishing rod
      */
-    private final ResourceKey<LootTable> fishingLootTable;
+//    private final ResourceKey<LootTable> fishingLootTable;
 
     /**
      * Getter for fishing rod loot table
      * @return Loot table ResourceKey
      */
-    public ResourceKey<LootTable> getFishingLootTable() {
-        return fishingLootTable;
+    public ResourceKey<LootTable> getFishingLootTable(ItemStack item) {
+
+        return FishanomicLootTables.WOODEN_ROD;
+        //        if (item.has(FishanomicDataComponents.FISHING_ROD_DATA)) {
+//            FishingRodProperties stats = item.get(FishanomicDataComponents.FISHING_ROD_DATA);
+//            return stats.lure();
+//        }
+//        return 0;
+
     }
 
 
@@ -78,38 +128,25 @@ public class FishanomicFishingRodItem extends FishingRodItem {
     //endregion
 
     /**
+     * @deprecated No longer used
      * Constructor fior a Fishanomics Fishing Rod
      * @param tier Tier of the rod
      * @param properties Item Properties
      */
-    public FishanomicFishingRodItem(Tiers tier, ResourceKey<LootTable> fishingLootTable, Properties properties) {
+    public FishanomicFishingRodItem(Tiers tier, ResourceKey<LootTable> fishingLootTable, int lureBonus, Properties properties) {
         super(properties);
-        this.tier = tier;
-        this.fishingLootTable = fishingLootTable;
-        switch (tier){
-            case Tiers.WOOD:
-                this.lureBonus = 20;    //These will get set in the new Tier type I make
-                break;
-            case Tiers.STONE:
-                this.lureBonus = 40;
-                break;
-            case Tiers.IRON:
-                this.lureBonus = 60;
-                break;
-            case Tiers.DIAMOND:
-                this.lureBonus = 80;
-                break;
-            case Tiers.NETHERITE:
-                this.lureBonus = 90;
-                break;
-            case Tiers.GOLD:
-                this.lureBonus = 120;
-                break;
-            default:
-                this.lureBonus = 0;
-                break;
-        }
+//        this.tier = tier;
+//        this.fishingLootTable = fishingLootTable;
+//        this.lureBonus = lureBonus;
     }
+
+    public FishanomicFishingRodItem(Properties properties){
+        super(properties);   //durability here
+        //gets data
+
+    }
+
+
 
     /**
      * @apiNote Changed the bobber entity passed in.
@@ -161,7 +198,7 @@ public class FishanomicFishingRodItem extends FishingRodItem {
             //Creates the Fishing Bobber to simulate fishing and get a loot item/not
             if (level instanceof ServerLevel serverlevel) {
                 int lureSpeed = (int) (EnchantmentHelper.getFishingTimeReduction(serverlevel, heldStack, player) * 20.0F);
-                lureSpeed += lureBonus;
+                lureSpeed += getLureBonus(heldStack, level);
                 int luck = EnchantmentHelper.getFishingLuckBonus(serverlevel, heldStack, player);
                 //check if I have passed "this" in right
                 level.addFreshEntity(new FishanomicFishingBobberEntity(player, level, luck, lureSpeed, this, heldStack)); //This casts the bobber -> recieves the reward
@@ -177,6 +214,7 @@ public class FishanomicFishingRodItem extends FishingRodItem {
 
     @Override
     public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair) {
-        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+        return super.isValidRepairItem(toRepair, repair);
+//        return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
     }
 }

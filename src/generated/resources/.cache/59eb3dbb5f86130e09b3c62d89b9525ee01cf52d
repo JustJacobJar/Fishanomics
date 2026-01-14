@@ -1,3 +1,6 @@
-// 1.21.1	2026-01-11T23:37:48.9212667	Loot Tables
+// 1.21.1	2026-01-14T17:32:04.0236154	Loot Tables
 3a24cc36b9d334c79673b1793e5b35142a3cc262 data/fishanomics/loot_table/blocks/fish_furnace.json
 2926b6bc8be4b5aff28991698026acafa4300c29 data/fishanomics/loot_table/blocks/fish_tank.json
+044a598189fd8639acab446e8d56bf331df4a9e4 data/fishanomics/loot_table/fishing/fish.json
+4ecb46de7909bf12159e769727e029d63899b2a2 data/fishanomics/loot_table/fishing/rod_tables/iron_rod.json
+79cc04f0a78e30a4c1473c5cec31c89123563cdd data/fishanomics/loot_table/fishing/rod_tables/wooden_rod.json

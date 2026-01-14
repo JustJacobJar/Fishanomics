@@ -1,4 +1,4 @@
-// 1.21.1	2026-01-12T00:50:24.5925534	Recipes
+// 1.21.1	2026-01-14T17:32:04.0246149	Recipes
 cdabba271268b0bc2f299be23239aa7537f6f758 data/fishanomics/advancement/recipes/misc/diamond_hook.json
 a37289cd1894497b7ac982c0a0890b7bc233d25f data/fishanomics/advancement/recipes/misc/fish_furnace.json
 63740a88fc64f2463732a75cfc33f74f2029eda4 data/fishanomics/advancement/recipes/misc/fish_tank_from_coal_fish.json
@@ -13,6 +13,7 @@ ca29370145cb268d06e5a417be8d512608f24a3a data/fishanomics/advancement/recipes/mi
 6351f6ff0ce4ca0882b5f1214a5a3dddff2bd66f data/fishanomics/advancement/recipes/tools/diamond_fishing_rod.json
 be4e54454985a61f1e033095cf5edae0a2d21f33 data/fishanomics/advancement/recipes/tools/gold_fishing_rod.json
 5ac9fd70e85c4bd897989e5c98a3fc2951fa38ff data/fishanomics/advancement/recipes/tools/iron_fishing_rod.json
+649e781342facda136ddc733026f8c821135cc45 data/fishanomics/advancement/recipes/tools/obsidian_rod_recipe.json
 55dace55563172df627ebaac95228ae9bc4da1e7 data/fishanomics/advancement/recipes/tools/stone_fishing_rod.json
 c3bdf9b531ff04daa17e477119d1108c15c8ac03 data/fishanomics/advancement/recipes/tools/wooden_fishing_rod.json
 49a900c2aff1c56b2b4d6474cebdce6b538425f3 data/fishanomics/recipe/diamond_fishing_rod.json
@@ -27,6 +28,7 @@ d2889cba894e46ae4cbaad3f287a421aad7873f3 data/fishanomics/recipe/iron_hook.json
 2a45d960a4c2a9698c77e81553d779b3075e04fb data/fishanomics/recipe/iron_ingot_from_blasting_iron_fish.json
 229ae10d4f55b33cd1a30540099a6d526589da1a data/fishanomics/recipe/iron_ingot_from_smelting_coal_fish.json
 bfe1b8943f558834124b7bc93929740f59fdf76f data/fishanomics/recipe/iron_ingot_from_smelting_iron_fish.json
+9cf218b1d134a41739472fcd7c120a5ab54acc46 data/fishanomics/recipe/obsidian_rod_recipe.json
 548f68e9b8e996a1b9cfe1b9b05d44b647159d01 data/fishanomics/recipe/stone_fishing_rod.json
 9b07e808e417f07a3eca7a9cc7a8d82aa26e53e4 data/fishanomics/recipe/stone_hook.json
 381ad177a73a2bc45d22543820c4ebadc54646a4 data/fishanomics/recipe/wooden_fishing_rod.json
